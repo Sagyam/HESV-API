@@ -23,25 +23,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("models/17class.h5")
+MODEL = tf.keras.models.load_model("models/19_class.h5")
 
-CLASS_NAMES = ['+',
-               '-',
-               '0',
-               '1',
-               '2',
-               '3',
-               '4',
-               '5',
-               '6',
-               '7',
-               '8',
-               '9',
-               '=',
-               'X',
-               'div',
-               'Y',
-               'Z']
+CLASS_NAMES = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "Add",
+    "Decimal",
+    "Division",
+    "Equals",
+    "Multiply",
+    "Minus",
+    "X",
+    "Y",
+    "Z",
+]
 
 
 @app.get("/")
@@ -50,14 +54,7 @@ def root():
 
 
 def read_file_as_image(data) -> np.ndarray:
-    return np.array(Image.open(BytesIO(data)))
-
-
-def process_img(image):
-    kernel = np.ones((3, 3), np.uint8)
-    dilation = cv2.erode(image, kernel, iterations=1)
-    image = cv2.resize(dilation, (45, 45))
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    return Image(BytesIO(data))
 
 
 @app.post("/predict")
@@ -65,15 +62,17 @@ async def predict(
     file: UploadFile = File(...)
 ):
     image = read_file_as_image(await file.read())
-    img_batch = np.expand_dims(image, 0)
 
-    predictions = MODEL.predict(img_batch)
+    image = np.expand_dims(image, axis=0)
+    image = image.astype('float32')/255
+
+    predictions = MODEL.predict(image)
 
     predicted_class = CLASS_NAMES[np.argmax(predictions)]
-    confidence = np.max(predictions)
+    confidence = np.max(predictions)*100
     return {
         'class': predicted_class,
-        'confidence': float(confidence),
+        'confidence': int(confidence),
 
 
     }
