@@ -12,21 +12,30 @@ from .helper.poly_detector import *
 
 @api_view(['POST'])
 def get_polynomial_equation(request):
-    image = request.data['image']
+    try:
+        image = request.data['image']
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    equation = get_poly_equation(image)
     data = {
-        'equation': 'x3+y3+z3',
-        'image_name': image.name
+        'equation': equation,
     }
     return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 def get_linear_equation(request):
-    image = request.data['image']
+    try:
+        image = request.data['image']
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    equation = get_lin_equation(image)
+
     data = {
-        'equation': 'x2+y2',
-        'name': image.name
+        'equation': equation,
+
     }
     return Response(data, status=status.HTTP_200_OK)
 

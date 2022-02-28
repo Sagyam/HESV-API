@@ -25,10 +25,10 @@ class_names = [
 ]
 
 
-#model = tf.keras.models.load_model("../models/19_class.h5")
+model = tf.keras.models.load_model("../models/19_class.h5")
 
 
-def get_countours(image):
+def get_contour(image):
     gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
     edged = cv.adaptiveThreshold(
         gray, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY_INV, 11, 4)
@@ -37,7 +37,7 @@ def get_countours(image):
     return contours
 
 
-def get_bounding_box(contours):
+def get_char_bb(contours):
     chars_bb = []
     for contour in contours:
         contour = contour.reshape((contour.shape[0], contour.shape[2]))
@@ -51,7 +51,7 @@ def get_bounding_box(contours):
     return chars_bb
 
 
-def replace_duplicate_chars(chars_bb):
+def remove_equals(chars_bb):
     chars_bb.sort()
     for i, box in enumerate(chars_bb):
         try:
@@ -70,7 +70,7 @@ def replace_duplicate_chars(chars_bb):
     return chars_bb
 
 
-def get_crops(chars_bb, image):
+def get_cropped_images(image, chars_bb):
     croped_images = []
     copy = image.copy()
     for box in chars_bb:
@@ -83,17 +83,21 @@ def get_crops(chars_bb, image):
     return croped_images
 
 
-def extra_padding(images, padding=50):
+def extra_padding(img, padding=50):
+    return cv.copyMakeBorder(img, top=padding, bottom=padding, left=padding, right=padding, borderType=cv.BORDER_CONSTANT, value=(255, 255, 255))
+
+
+def get_padded_images(croped_images):
     padded_images = []
-    for image in images:
-        padded_images.append(cv.copyMakeBorder(image, top=padding, bottom=padding, left=padding,
-                             right=padding, borderType=cv.BORDER_CONSTANT, value=(255, 255, 255)))
+    for img in croped_images:
+        padded_img = extra_padding(img)
+        padded_images.append(padded_img)
     return padded_images
 
 
-def resize_image(images):
+def get_resized_images(padded_images):
     resized_images = []
-    for img in images:
+    for img in padded_images:
         resized_img = cv.resize(img, (100, 100), interpolation=cv.INTER_LINEAR)
         resized_images.append(resized_img)
     return resized_images
@@ -114,8 +118,22 @@ def get_prediction(images):
     return predictions
 
 
-def get_eqn(predictions):
+def buld_lin_eqn(predictions):
     eqn = ""
     for prediction in predictions:
         eqn += prediction[0]
+    return eqn
+
+
+def get_lin_equation(image):
+    image = cv.imdecode(np.fromstring(
+        image.read(), np.uint8), cv.IMREAD_COLOR)
+    contours = get_contour(image)
+    chars_bb = get_char_bb(contours)
+    chars_bb = remove_equals(chars_bb)
+    croped_images = get_cropped_images(image, chars_bb)
+    padded_images = get_padded_images(croped_images)
+    resized_images = get_resized_images(padded_images)
+    predictions = get_prediction(resized_images)
+    eqn = buld_lin_eqn(predictions)
     return eqn
