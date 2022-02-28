@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "efbe0620-e420-467c-8e6a-decf41ec3771",
+		"name": "Major Project Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Solve Polynomial  Equation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "equation",
+							"value": "x^3+2.5x^2+x=1.0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/equations/solve-polynomial-equation",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"equations",
+						"solve-polynomial-equation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Solve 2D Linear Equation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "equation1",
+							"value": "2.5x+5.5y=7.2",
+							"type": "text"
+						},
+						{
+							"key": "equation2",
+							"value": "2.5x+5.5y=-7.2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/equations/solve-2d-linear-equation",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"equations",
+						"solve-2d-linear-equation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Solve 3D Linear Equation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "equation1",
+							"value": "2x+5y+2z=1",
+							"type": "text"
+						},
+						{
+							"key": "equation2",
+							"value": "4x+8y+7z=-3",
+							"type": "text"
+						},
+						{
+							"key": "equation3",
+							"value": "2x-5y+6z=12",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/equations/solve-3d-linear-equation",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"equations",
+						"solve-3d-linear-equation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Linear Equation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/sagyam/Documents/Major-Project-Backend/test_cases/lin_eqn.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/equations/get-linear-equation",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"equations",
+						"get-linear-equation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Polynomial Equation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/sagyam/Documents/Major-Project-Backend/test_cases/poly_eqn.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/equations/get-polynomial-equation",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"equations",
+						"get-polynomial-equation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
