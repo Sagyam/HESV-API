@@ -1,1 +1,1 @@
-web: cd server && python manage.py runserver 0.0.0.0:8000
+web: cd server && gunicorn djangoBackend.wsgi:application
