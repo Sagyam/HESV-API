@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-blz-!u^5knpjbc_*h4w6rj^me%3ibm88_sggkeolcd7^1t8ybt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://hesv-backend.herokuapp.com', '23.22.130.173:443', 'localhost',
-                 '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,8 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoBackend.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = ['https://hesv-backend.herokuapp.com', '23.22.130.173:443', 'localhost',
-                        '127.0.0.1', '0.0.0.0']
+CORS_ALLOWED_ORIGINS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -121,7 +119,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_TZ = True
 
