@@ -52,9 +52,9 @@ def solve_3d_linear_equation(request):
     soln, error, errorMessage, warningMessage = solve_3d([eq1, eq2, eq3])
 
     data = {
-        'x': soln[0],
-        'y': soln[1],
-        'z': soln[2],
+        'x': soln[0] if soln is not None else None,
+        'y': soln[1] if soln is not None else None,
+        'z': soln[2] if soln is not None else None,
         'error': error,
         "errorMessage": errorMessage,
         "warningMessage": warningMessage
