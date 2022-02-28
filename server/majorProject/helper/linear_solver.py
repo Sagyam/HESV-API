@@ -16,25 +16,18 @@ def standardize_eqn(equation):
 
     left_sub = re.sub("[+-]?\d+[XxYyZz]|[+-]?\d+\.\d+[XxYyZz]", "", left)
 
-    if left_sub == '':
+    if (
+        left_sub == ''
+        or left_sub != ''
+        and left_sub == left
+        or left_sub != ''
+        and left_sub != left
+        and not contains_nums(left_sub)
+        and not contains_nums(left_sub)
+    ):
         intercept = -1 * float(right)
         if intercept > 0.0:
-            intercept = '+' + str(intercept)
-        equation = left + str(intercept)
-
-    elif left_sub == left:
-        intercept = -1 * float(right)
-        if intercept > 0.0:
-            intercept = '+' + str(intercept)
-        equation = left + str(intercept)
-
-    elif contains_nums(left_sub):
-        equation = left
-
-    elif not contains_nums(left_sub):
-        intercept = -1 * float(right)
-        if intercept > 0.0:
-            intercept = '+' + str(intercept)
+            intercept = f'+{str(intercept)}'
         equation = left + str(intercept)
 
     else:
@@ -123,7 +116,7 @@ def solve_2d(equtations):
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+    for eqn in equtations:
         std_eqn = standardize_eqn(eqn)
         x, y, c = get_coffecient_2d(std_eqn)
         a.append([x, y])
@@ -152,7 +145,7 @@ def solve_3d(equtations):
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+    for eqn in equtations:
         std_eqn = standardize_eqn(eqn)
         x, y, z, c = get_coffecient_3d(std_eqn)
         a.append([x, y, z])

@@ -119,10 +119,7 @@ def get_prediction(images):
 
 
 def buld_lin_eqn(predictions):
-    eqn = ""
-    for prediction in predictions:
-        eqn += prediction[0]
-    return eqn
+    return "".join(prediction[0] for prediction in predictions)
 
 
 def get_lin_equation(image):
@@ -135,5 +132,4 @@ def get_lin_equation(image):
     padded_images = get_padded_images(croped_images)
     resized_images = get_resized_images(padded_images)
     predictions = get_prediction(resized_images)
-    eqn = buld_lin_eqn(predictions)
-    return eqn
+    return buld_lin_eqn(predictions)
