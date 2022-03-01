@@ -25,7 +25,14 @@ class_names = [
 ]
 
 
-model = tf.keras.models.load_model("../models/19_class.h5")
+#model = tf.keras.models.load_model("../models/19_class.h5")
+
+lite = tf.lite.Interpreter(model_path='../models/tflite_quant_model.tflite')
+input_details = lite.get_input_details()
+output_details = lite.get_output_details()
+lite.resize_tensor_input(input_details[0]['index'], (1, 100, 100, 3))
+lite.resize_tensor_input(output_details[0]['index'], (1, 19))
+lite.allocate_tensors()
 
 
 def get_contour(image):
@@ -103,19 +110,33 @@ def get_resized_images(padded_images):
     return resized_images
 
 
-def get_prediction(images):
-    predictions = []
+# def get_prediction(images):
+#     predictions = []
+#     for image in images:
+#         image = np.expand_dims(image, axis=0)
+#         image = image.astype('float32')/255
+#         prediction = model.predict(image)
+#         label = class_names[np.argmax(prediction)]
+#         confidence = np.max(prediction)*100
+#         confidence = str(confidence)[:2]
+#         predictions.append((label, confidence))
+#     return predictions
+
+
+def show_prediction_lite(images):
+    predictions_lst = []
     for image in images:
         image = np.expand_dims(image, axis=0)
         image = image.astype('float32')/255
-
-        prediction = model.predict(image)
+        lite.set_tensor(input_details[0]['index'], image)
+        lite.invoke()
+        prediction = lite.get_tensor(output_details[0]['index'])
         label = class_names[np.argmax(prediction)]
         confidence = np.max(prediction)*100
         confidence = str(confidence)[:2]
-        predictions.append((label, confidence))
+        predictions_lst.append((label, confidence))
 
-    return predictions
+    return predictions_lst
 
 
 def buld_lin_eqn(predictions):
@@ -134,6 +155,6 @@ def get_lin_equation(image):
     croped_images = get_cropped_images(image, chars_bb)
     padded_images = get_padded_images(croped_images)
     resized_images = get_resized_images(padded_images)
-    predictions = get_prediction(resized_images)
+    predictions = show_prediction_lite(resized_images)
     eqn = buld_lin_eqn(predictions)
     return eqn

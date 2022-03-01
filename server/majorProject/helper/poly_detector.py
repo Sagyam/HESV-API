@@ -25,7 +25,14 @@ class_names = [
 ]
 
 
-model = tf.keras.models.load_model("../models/19_class.h5")
+#model = tf.keras.models.load_model("../models/19_class.h5")
+
+lite = tf.lite.Interpreter(model_path='../models/tflite_quant_model.tflite')
+input_details = lite.get_input_details()
+output_details = lite.get_output_details()
+lite.resize_tensor_input(input_details[0]['index'], (1, 100, 100, 3))
+lite.resize_tensor_input(output_details[0]['index'], (1, 19))
+lite.allocate_tensors()
 
 
 def get_contour(image):
@@ -129,15 +136,25 @@ def classify_superscript(centroids, chars_bb):
             is_super[i+1] = 'super'
 
 
-def show_prediction(image):
+# def show_prediction(image):
+#     image = np.expand_dims(image, axis=0)
+#     image = image.astype('float32')/255
+#     predictions = model.predict(image)
+#     label = class_names[np.argmax(predictions)]
+#     confidence = np.max(predictions)*100
+#     confidence = str(confidence)[:2]
+#     return label, confidence
+
+
+def show_prediction_lite(image):
     image = np.expand_dims(image, axis=0)
     image = image.astype('float32')/255
-
-    predictions = model.predict(image)
+    lite.set_tensor(input_details[0]['index'], image)
+    lite.invoke()
+    predictions = lite.get_tensor(output_details[0]['index'])
     label = class_names[np.argmax(predictions)]
     confidence = np.max(predictions)*100
     confidence = str(confidence)[:2]
-
     return label, confidence
 
 
@@ -148,7 +165,7 @@ def build_poly_equation(images, types):
     '''
     eqn = ''
     for (image, char_type) in zip(images, types):
-        label, conf = show_prediction(image)
+        label, conf = show_prediction_lite(image)
         if char_type == 'super':
             eqn += '^' + label
         else:
