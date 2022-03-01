@@ -59,15 +59,13 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/equations/solve-2d-linear-equation",
-					"protocol": "http",
+					"raw": "https://hesv-backend.herokuapp.com/equations/solve-2d-linear-equation",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"hesv-backend",
+						"herokuapp",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"equations",
 						"solve-2d-linear-equation"
@@ -102,15 +100,13 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/equations/solve-3d-linear-equation",
-					"protocol": "http",
+					"raw": "https://hesv-backend.herokuapp.com/equations/solve-3d-linear-equation",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"hesv-backend",
+						"herokuapp",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"equations",
 						"solve-3d-linear-equation"
@@ -135,15 +131,13 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/equations/get-linear-equation",
-					"protocol": "http",
+					"raw": "https://hesv-backend.herokuapp.com/equations/get-linear-equation",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"hesv-backend",
+						"herokuapp",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"equations",
 						"get-linear-equation"
@@ -168,15 +162,13 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/equations/get-polynomial-equation",
-					"protocol": "http",
+					"raw": "https://hesv-backend.herokuapp.com/equations/get-polynomial-equation",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"hesv-backend",
+						"herokuapp",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"equations",
 						"get-polynomial-equation"
