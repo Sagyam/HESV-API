@@ -14,8 +14,9 @@ from .helper.poly_detector import *
 def get_polynomial_equation(request):
     try:
         image = request.data['image']
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except KeyError:
+        data = {'error': 'No image provided'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
     equation, DEBUG_LOGS = get_poly_equation(image)
     data = {
@@ -29,8 +30,9 @@ def get_polynomial_equation(request):
 def get_linear_equation(request):
     try:
         image = request.data['image']
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except KeyError:
+        data = {'error': 'No image provided'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
     equation, DEBUG_LOGS = get_lin_equation(image)
 
@@ -49,7 +51,8 @@ def solve_3d_linear_equation(request):
         eq2 = request.data['equation2']
         eq3 = request.data['equation3']
     except KeyError:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        data = {'error': 'Missing equation'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
     soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_3d([
                                                                      eq1, eq2, eq3])
@@ -72,7 +75,8 @@ def solve_2d_linear_equation(request):
         eq1 = request.data['equation1']
         eq2 = request.data['equation2']
     except KeyError:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        data = {'error': 'Missing equation'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
     soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_2d([
                                                                      eq1, eq2])
@@ -93,7 +97,8 @@ def solve_polynomial_equation(request):
     try:
         equation = request.data['equation']
     except KeyError:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        data = {'error': 'No equation provided'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
     solutions, soln_type, DEBUG_LOGS = solve_polynomial_helper(equation)
 
