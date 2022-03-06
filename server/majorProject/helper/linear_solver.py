@@ -2,6 +2,9 @@ import re
 import numpy as np
 
 
+DEBUG_LOGS = []
+
+
 def contains_nums(string):
     return any(i.isdigit() for i in string)
 
@@ -40,6 +43,8 @@ def standardize_eqn(equation):
     else:
         equation = left
 
+    DEBUG_LOGS.append(f'equation: {equation}')
+
     return equation
 
 
@@ -72,6 +77,8 @@ def get_coffecient_2d(equation):
     elif coef_y == '-':
         coef_y = -1.0
 
+    DEBUG_LOGS.append(
+        f'coef_x: {coef_x}, coef_y: {coef_y}, intercept: {intercept}')
     return [float(coef_x), float(coef_y), float(intercept)]
 
 
@@ -114,6 +121,8 @@ def get_coffecient_3d(equation):
     elif coef_z == '-':
         coef_z = -1.0
 
+    DEBUG_LOGS.append(
+        f'coef_x: {coef_x}, coef_y: {coef_y}, coef_z: {coef_z}, intercept: {intercept}')
     return [float(coef_x), float(coef_y), float(coef_z), float(intercept)]
 
 
@@ -143,7 +152,7 @@ def solve_2d(equtations):
             soln = None
             errorMessage = e
             error = True
-    return [soln, error, errorMessage, warningMessage]
+    return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
 
 
 def solve_3d(equtations):
@@ -173,4 +182,4 @@ def solve_3d(equtations):
             errorMessage = e
             error = True
 
-    return [soln, error, errorMessage, warningMessage]
+    return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]

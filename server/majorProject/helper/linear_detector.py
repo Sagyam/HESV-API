@@ -2,6 +2,9 @@ import cv2 as cv
 import tensorflow as tf
 import numpy as np
 
+
+DEBUG_LOGS = []
+
 class_names = [
     "0",
     "1",
@@ -155,6 +158,10 @@ def get_lin_equation(image):
     croped_images = get_cropped_images(image, chars_bb)
     padded_images = get_padded_images(croped_images)
     resized_images = get_resized_images(padded_images)
+
     predictions = show_prediction_lite(resized_images)
+    
+    DEBUG_LOGS.append(predictions)
+
     eqn = buld_lin_eqn(predictions)
-    return eqn
+    return eqn, DEBUG_LOGS

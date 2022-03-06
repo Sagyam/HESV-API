@@ -21,15 +21,13 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/equations/solve-polynomial-equation",
-					"protocol": "http",
+					"raw": "https://hesv-backend.herokuapp.com/equations/solve-polynomial-equation",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"hesv-backend",
+						"herokuapp",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"equations",
 						"solve-polynomial-equation"
@@ -84,17 +82,17 @@
 					"formdata": [
 						{
 							"key": "equation1",
-							"value": "2x+5y+2z=1",
+							"value": "2x+5y=1",
 							"type": "text"
 						},
 						{
 							"key": "equation2",
-							"value": "4x+8y+7z=-3",
+							"value": "4x+8y=-3",
 							"type": "text"
 						},
 						{
 							"key": "equation3",
-							"value": "2x-5y+6z=12",
+							"value": "2x-5y=12",
 							"type": "text"
 						}
 					]
@@ -157,7 +155,7 @@
 						{
 							"key": "image",
 							"type": "file",
-							"src": "/home/sagyam/Documents/Major-Project-Backend/test_cases/poly_eqn.png"
+							"src": "/home/sagyam/Desktop/test-poly.png"
 						}
 					]
 				},

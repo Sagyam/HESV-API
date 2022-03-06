@@ -1,6 +1,8 @@
 import re
 import numpy as np
 
+DEBUG_LOGS = []
+
 
 def add_leading_ones(eqn):
     '''
@@ -44,12 +46,12 @@ def standardize_eqn(eqn):
     # add a leading 1 where necessary
     eqn = add_leading_ones(eqn)
 
-    # remove = sign
     try:
         left, right = eqn.split('=')[0], eqn.split('=')[1]
     except IndexError:
         return eqn
 
+    # remove = sign
     if right == '':
         return left
     elif right == '0':
@@ -68,8 +70,12 @@ def get_sorted_eqn(eqn):
     Note: If the sign of first term is postive, then it must be specified as +
     Eg: '2x+3=0' should be given as '+2x+3=0'
     '''
-    # get the lone number in the eqn
-    number = re.findall(r'[+,-]\d\.\d$|[+,-]\d$', eqn)[0]
+    # get the constant in the eqn
+    try:
+        number = re.findall(r'[+,-]\d\.\d$|[+,-]\d$', eqn)[0]
+    except IndexError:
+        number = ''
+
     # get all the terms in the equation
     terms = re.findall(r'[+,-]\d[x,X]\^\d|[+,-]\d\.\d[x,X]\^\d', eqn)
     # save the sign of the term in dictinary
@@ -135,15 +141,19 @@ def get_all_coeffs(eqn):
 
 def solve_polynomial_helper(equation):
     standardized_eqn = standardize_eqn(equation)
-    print(f'Standardized equation: {standardized_eqn}')
+    DEBUG_LOGS.append(f'Standardized equation: {standardized_eqn}')
+
     sorted_eqn = get_sorted_eqn(standardized_eqn)
-    print(f'Sorted equation: {sorted_eqn}')
+    DEBUG_LOGS.append(f'Sorted equation: {sorted_eqn}')
+
     coefficents = get_all_coeffs(sorted_eqn)
-    print(f'Coefficients: {coefficents}')
+    DEBUG_LOGS.append(f'Coefficients: {coefficents}')
+
     solutions = np.roots(coefficents)
-    print(f'Solutions: {solutions}')
+    DEBUG_LOGS.append(f'Solutions: {solutions}')
+
     soln_type = 'real' if np.isreal(solutions).all() else 'complex'
     if soln_type == 'complex':
         solutions = [str(solution.real) + '+i' + str(solution.imag)
                      for solution in solutions]
-    return solutions, soln_type
+    return solutions, soln_type, DEBUG_LOGS

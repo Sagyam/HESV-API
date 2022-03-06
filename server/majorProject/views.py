@@ -17,9 +17,10 @@ def get_polynomial_equation(request):
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    equation = get_poly_equation(image)
+    equation, DEBUG_LOGS = get_poly_equation(image)
     data = {
         'equation': equation,
+        'debug_logs': DEBUG_LOGS
     }
     return Response(data, status=status.HTTP_200_OK)
 
@@ -31,10 +32,11 @@ def get_linear_equation(request):
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    equation = get_lin_equation(image)
+    equation, DEBUG_LOGS = get_lin_equation(image)
 
     data = {
         'equation': equation,
+        'debug_logs': DEBUG_LOGS,
 
     }
     return Response(data, status=status.HTTP_200_OK)
@@ -49,7 +51,8 @@ def solve_3d_linear_equation(request):
     except KeyError:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    soln, error, errorMessage, warningMessage = solve_3d([eq1, eq2, eq3])
+    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_3d([
+                                                                     eq1, eq2, eq3])
 
     data = {
         'x': soln[0] if soln is not None else None,
@@ -57,7 +60,8 @@ def solve_3d_linear_equation(request):
         'z': soln[2] if soln is not None else None,
         'error': error,
         "errorMessage": errorMessage,
-        "warningMessage": warningMessage
+        "warningMessage": warningMessage,
+        "debug_logs": DEBUG_LOGS,
     }
     return Response(data, status=status.HTTP_200_OK)
 
@@ -70,14 +74,16 @@ def solve_2d_linear_equation(request):
     except KeyError:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    soln, error, errorMessage, warningMessage = solve_2d([eq1, eq2])
+    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_2d([
+                                                                     eq1, eq2])
 
     data = {
         'x': soln[0],
         'y': soln[1],
         'error': error,
         "errorMessage": errorMessage,
-        "warningMessage": warningMessage
+        "warningMessage": warningMessage,
+        "debug_logs": DEBUG_LOGS,
     }
     return Response(data, status=status.HTTP_200_OK)
 
@@ -89,10 +95,11 @@ def solve_polynomial_equation(request):
     except KeyError:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    solutions, soln_type = solve_polynomial_helper(equation)
+    solutions, soln_type, DEBUG_LOGS = solve_polynomial_helper(equation)
 
     data = {
         'solutions': solutions,
-        'solution_type': soln_type
+        'solution_type': soln_type,
+        "debug_logs": DEBUG_LOGS
     }
     return Response(data, status=status.HTTP_200_OK)
