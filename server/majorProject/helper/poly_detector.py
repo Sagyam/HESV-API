@@ -114,7 +114,7 @@ def get_resized_images(padded_images):
 
 def get_centroid(chars_bb):
     centroids = []
-    for _, box in enumerate(chars_bb):
+    for box in chars_bb:
         centroidX, centroidY = (int((box[0]+box[2])/2), int((box[1]+box[3])/2))
         centroids.append((centroidX, centroidY))
     return centroids
@@ -169,10 +169,7 @@ def build_poly_equation(images, types):
     eqn = ''
     for (image, char_type) in zip(images, types):
         label, conf = show_prediction_lite(image)
-        if char_type == 'super':
-            eqn += '^' + label
-        else:
-            eqn += label
+        eqn += f'^{label}' if char_type == 'super' else label
     return eqn
 
 
