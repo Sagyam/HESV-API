@@ -1,6 +1,8 @@
 import re
 import numpy as np
 
+DEBUG_LOGS = []
+
 
 def add_leading_ones(eqn):
     '''
@@ -139,15 +141,19 @@ def get_all_coeffs(eqn):
 
 def solve_polynomial_helper(equation):
     standardized_eqn = standardize_eqn(equation)
-    print(f'Standardized equation: {standardized_eqn}')
+    DEBUG_LOGS.append(f'Standardized equation: {standardized_eqn}')
+
     sorted_eqn = get_sorted_eqn(standardized_eqn)
-    print(f'Sorted equation: {sorted_eqn}')
+    DEBUG_LOGS.append(f'Sorted equation: {sorted_eqn}')
+
     coefficents = get_all_coeffs(sorted_eqn)
-    print(f'Coefficients: {coefficents}')
+    DEBUG_LOGS.append(f'Coefficients: {coefficents}')
+
     solutions = np.roots(coefficents)
-    print(f'Solutions: {solutions}')
+    DEBUG_LOGS.append(f'Solutions: {solutions}')
+
     soln_type = 'real' if np.isreal(solutions).all() else 'complex'
     if soln_type == 'complex':
         solutions = [str(solution.real) + '+i' + str(solution.imag)
                      for solution in solutions]
-    return solutions, soln_type
+    return solutions, soln_type, DEBUG_LOGS

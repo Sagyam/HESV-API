@@ -2,6 +2,8 @@ import cv2 as cv
 import tensorflow as tf
 import numpy as np
 
+DEBUG_LOGS = []
+
 class_names = [
     "0",
     "1",
@@ -155,6 +157,7 @@ def show_prediction_lite(image):
     label = class_names[np.argmax(predictions)]
     confidence = np.max(predictions)*100
     confidence = str(confidence)[:2]
+    DEBUG_LOGS.append(f'label:{label} confidence{confidence}')
     return label, confidence
 
 
@@ -184,5 +187,7 @@ def get_poly_equation(image):
     resized_images = get_resized_images(padded_images)
     centroids = get_centroid(chars_bb)
     chars_type = classify_superscript(centroids, chars_bb)
+    DEBUG_LOGS.append(f'chars_type: {chars_type}')
+
     equation = build_poly_equation(resized_images, chars_type)
     return equation
