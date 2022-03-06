@@ -190,4 +190,4 @@ def get_poly_equation(image):
     DEBUG_LOGS.append(f'chars_type: {chars_type}')
 
     equation = build_poly_equation(resized_images, chars_type)
-    return equation
+    return equation, DEBUG_LOGS
