@@ -44,12 +44,12 @@ def standardize_eqn(eqn):
     # add a leading 1 where necessary
     eqn = add_leading_ones(eqn)
 
-    # remove = sign
     try:
         left, right = eqn.split('=')[0], eqn.split('=')[1]
     except IndexError:
         return eqn
 
+    # remove = sign
     if right == '':
         return left
     elif right == '0':
@@ -68,8 +68,12 @@ def get_sorted_eqn(eqn):
     Note: If the sign of first term is postive, then it must be specified as +
     Eg: '2x+3=0' should be given as '+2x+3=0'
     '''
-    # get the lone number in the eqn
-    number = re.findall(r'[+,-]\d\.\d$|[+,-]\d$', eqn)[0]
+    # get the constant in the eqn
+    try:
+        number = re.findall(r'[+,-]\d\.\d$|[+,-]\d$', eqn)[0]
+    except IndexError:
+        number = ''
+
     # get all the terms in the equation
     terms = re.findall(r'[+,-]\d[x,X]\^\d|[+,-]\d\.\d[x,X]\^\d', eqn)
     # save the sign of the term in dictinary
