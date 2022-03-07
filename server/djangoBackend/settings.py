@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-blz-!u^5knpjbc_*h4w6rj^me%3ibm88_sggkeolcd7^1t8ybt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://localhost:8000', ' https://127.0.0.1:8000']
 
 
 # Application definition
@@ -74,7 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoBackend.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = ['*']
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
