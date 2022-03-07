@@ -20,7 +20,7 @@ class TestMajorProject(TestCase):
     def test_poly_detector(self):
         for (dirpath, dirnames, filenames) in walk('./majorProject/test/poly_images'):
             for filename in filenames:
-                image = cv2.imread(dirpath + '/' + filename)
+                image = cv2.imread(f'{dirpath}/{filename}')
                 eqn = get_poly_eqn_test(image)
                 true_eqn = poly_key.eqns[filename]
                 self.assertEqual(eqn, true_eqn)
@@ -28,7 +28,7 @@ class TestMajorProject(TestCase):
     def test_linear_detector(self):
         for (dirpath, dirnames, filenames) in walk('./majorProject/test/linear_images'):
             for filename in filenames:
-                image = cv2.imread(dirpath + '/' + filename)
+                image = cv2.imread(f'{dirpath}/{filename}')
                 eqn = get_lin_equation_test(image)
                 true_eqn = linear_key.eqns[filename]
                 self.assertEqual(eqn, true_eqn)
