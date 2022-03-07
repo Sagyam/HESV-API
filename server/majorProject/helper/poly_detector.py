@@ -21,9 +21,9 @@ class_names = [
     "=",
     "*",
     "-",
-    "X",
-    "Y",
-    "Z",
+    "x",
+    "y",
+    "z",
 ]
 
 
@@ -188,6 +188,23 @@ def get_poly_equation(image):
     centroids = get_centroid(chars_bb)
     chars_type = classify_superscript(centroids, chars_bb)
     DEBUG_LOGS.append(f'chars_type: {chars_type}')
-
     equation = build_poly_equation(resized_images, chars_type)
     return equation, DEBUG_LOGS
+
+
+def get_poly_eqn_test(image):
+    """
+    This function is exact copy of get_poly_equation() function.
+    Except that it is used for testing purpose.
+    It accepts image as numpy array and returns equation as string.
+    """
+    contours = get_contour(image)
+    chars_bb = get_char_bb(contours)
+    chars_bb = remove_equals(chars_bb)
+    croped_images = get_cropped_images(image, chars_bb)
+    padded_images = get_padded_images(croped_images)
+    resized_images = get_resized_images(padded_images)
+    centroids = get_centroid(chars_bb)
+    chars_type = classify_superscript(centroids, chars_bb)
+    equation = build_poly_equation(resized_images, chars_type)
+    return equation
