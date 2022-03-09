@@ -64,20 +64,18 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'corsheaders.middleware.CorsMiddleware',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'corsheaders.middleware.CorsMiddleware',
+
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'djangoBackend.wsgi.application'
-
-# CORS_ALLOWED_ORIGINS = ['http://localhost',
-#                       'http://127.0.0.1', 'https://hesv-backend.herokuapp.com', 'https://hesv.vercel.app']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
