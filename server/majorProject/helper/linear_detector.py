@@ -2,9 +2,7 @@ import cv2 as cv
 import tensorflow as tf
 import numpy as np
 
-
 DEBUG_LOGS = []
-
 class_names = [
     "0",
     "1",
@@ -150,6 +148,7 @@ def buld_lin_eqn(predictions):
 
 
 def get_lin_equation(image):
+    DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
         image.read(), np.uint8), cv.IMREAD_COLOR)
     contours = get_contour(image)

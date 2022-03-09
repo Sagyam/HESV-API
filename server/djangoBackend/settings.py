@@ -75,8 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoBackend.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = ['http://localhost',
-                        'http://127.0.0.1', 'https://hesv-backend.herokuapp.com', 'https://hesv.vercel.app']
+# CORS_ALLOWED_ORIGINS = ['http://localhost',
+#                       'http://127.0.0.1', 'https://hesv-backend.herokuapp.com', 'https://hesv.vercel.app']
+
+CORS_ALLOWED_ORIGINS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
