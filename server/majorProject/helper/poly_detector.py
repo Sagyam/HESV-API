@@ -177,6 +177,7 @@ def build_poly_equation(images, types):
 
 
 def get_poly_equation(image):
+    DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
         image.read(), np.uint8), cv.IMREAD_COLOR)
     contours = get_contour(image)

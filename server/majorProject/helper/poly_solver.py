@@ -140,6 +140,8 @@ def get_all_coeffs(eqn):
 
 
 def solve_polynomial_helper(equation):
+    DEBUG_LOGS = []
+
     standardized_eqn = standardize_eqn(equation)
     DEBUG_LOGS.append(f'Standardized equation: {standardized_eqn}')
 
