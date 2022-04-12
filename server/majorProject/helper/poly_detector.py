@@ -176,10 +176,27 @@ def build_poly_equation(images, types):
     return eqn
 
 
+def handle_alpha_channel(image):
+    '''
+    Input: Image with alpha channel
+    Output: Image without alpha channel
+    '''
+    try:
+        alpha = image[:, :, 3]
+        alpha = cv.bitwise_not(alpha)
+        new_image = cv.merge([alpha, alpha, alpha])
+        image = new_image
+    except:
+        pass
+    finally:
+        return image
+
+
 def get_poly_equation(image):
     DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
-        image.read(), np.uint8), cv.IMREAD_COLOR)
+        image.read(), np.uint8), cv.IMREAD_UNCHANGED)
+    image = handle_alpha_channel(image)
     contours = get_contour(image)
     chars_bb = get_char_bb(contours)
     chars_bb = remove_equals(chars_bb)
@@ -191,21 +208,3 @@ def get_poly_equation(image):
     DEBUG_LOGS.append(f'chars_type: {chars_type}')
     equation = build_poly_equation(resized_images, chars_type)
     return equation, DEBUG_LOGS
-
-
-def get_poly_eqn_test(image):
-    """
-    This function is exact copy of get_poly_equation() function.
-    Except that it is used for testing purpose.
-    It accepts image as numpy array and returns equation as string.
-    """
-    contours = get_contour(image)
-    chars_bb = get_char_bb(contours)
-    chars_bb = remove_equals(chars_bb)
-    croped_images = get_cropped_images(image, chars_bb)
-    padded_images = get_padded_images(croped_images)
-    resized_images = get_resized_images(padded_images)
-    centroids = get_centroid(chars_bb)
-    chars_type = classify_superscript(centroids, chars_bb)
-    equation = build_poly_equation(resized_images, chars_type)
-    return equation
