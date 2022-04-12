@@ -152,6 +152,8 @@ def solve_polynomial_helper(equation):
     DEBUG_LOGS.append(f'Coefficients: {coefficents}')
 
     solutions = np.roots(coefficents)
+    solutions = [round(x, 2) for x in solutions]
+
     DEBUG_LOGS.append(f'Solutions: {solutions}')
 
     soln_type = 'real' if np.isreal(solutions).all() else 'complex'
