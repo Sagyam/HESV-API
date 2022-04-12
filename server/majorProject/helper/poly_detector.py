@@ -176,10 +176,27 @@ def build_poly_equation(images, types):
     return eqn
 
 
+def handle_alpha_channel(image):
+    '''
+    Input: Image with alpha channel
+    Output: Image without alpha channel
+    '''
+    try:
+        alpha = image[:, :, 3]
+        alpha = cv.bitwise_not(alpha)
+        new_image = cv.merge([alpha, alpha, alpha])
+        image = new_image
+    except:
+        pass
+    finally:
+        return image
+
+
 def get_poly_equation(image):
     DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
-        image.read(), np.uint8), cv.IMREAD_COLOR)
+        image.read(), np.uint8), cv.IMREAD_UNCHANGED)
+    image = handle_alpha_channel(image)
     contours = get_contour(image)
     chars_bb = get_char_bb(contours)
     chars_bb = remove_equals(chars_bb)
