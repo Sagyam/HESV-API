@@ -141,10 +141,7 @@ def show_prediction_lite(images):
 
 
 def buld_lin_eqn(predictions):
-    eqn = ""
-    for prediction in predictions:
-        eqn += prediction[0]
-    return eqn
+    return "".join(prediction[0] for prediction in predictions)
 
 
 def handle_alpha_channel(image):
@@ -164,7 +161,6 @@ def handle_alpha_channel(image):
 
 
 def get_lin_equation(image):
-    DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
         image.read(), np.uint8), cv.IMREAD_UNCHANGED)
     image = handle_alpha_channel(image)
@@ -177,7 +173,6 @@ def get_lin_equation(image):
 
     predictions = show_prediction_lite(resized_images)
 
-    DEBUG_LOGS.append(predictions)
-
+    DEBUG_LOGS = [predictions]
     eqn = buld_lin_eqn(predictions)
     return eqn, DEBUG_LOGS
