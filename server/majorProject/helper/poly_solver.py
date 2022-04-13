@@ -73,7 +73,7 @@ def get_sorted_eqn(eqn):
     # get the constant in the eqn
     try:
         # this regex look for a interger or float preceded by a '+' or '-' and not succeeded by 'x'
-        number = re.findall(r'[+,-]\d+\.\d+[^x]|[+,-]\d+[^x]', eqn)[0]
+        number = re.findall(r'[+,-]\d+\.\d+[^xX]|[+,-]\d+[^xX]', eqn)[-1]
     except IndexError:
         number = ''
 
