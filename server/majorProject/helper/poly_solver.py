@@ -72,12 +72,13 @@ def get_sorted_eqn(eqn):
     '''
     # get the constant in the eqn
     try:
-        number = re.findall(r'[+,-]\d\.\d$|[+,-]\d$', eqn)[0]
+        # this regex look for a interger or float preceded by a '+' or '-' and not succeeded by 'x'
+        number = re.findall(r'[+,-]\d+\.\d+[^x]|[+,-]\d+[^x]', eqn)[0]
     except IndexError:
         number = ''
 
     # get all the terms in the equation
-    terms = re.findall(r'[+,-]\d[x,X]\^\d|[+,-]\d\.\d[x,X]\^\d', eqn)
+    terms = re.findall(r'[+,-]\d+[x,X]\^\d|[+,-]\d+\.\d+[x,X]\^\d', eqn)
     # save the sign of the term in dictinary
     signs = {term[1:]: term[0] for term in terms}
     # remove first character from each term
