@@ -54,8 +54,7 @@ def solve_3d_linear_equation(request):
         data = {'error': 'Missing equation'}
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_3d([
-                                                                     eq1, eq2, eq3])
+    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_3d([eq1, eq2, eq3])
 
     data = {
         'x': soln[0] if soln is not None else None,
@@ -78,8 +77,7 @@ def solve_2d_linear_equation(request):
         data = {'error': 'Missing equation'}
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_2d([
-                                                                     eq1, eq2])
+    soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_2d([eq1, eq2])
 
     data = {
         'x': soln[0],
