@@ -114,7 +114,7 @@ def get_resized_images(padded_images):
 
 def get_centroid(chars_bb):
     centroids = []
-    for _, box in enumerate(chars_bb):
+    for box in chars_bb:
         centroidX, centroidY = (int((box[0]+box[2])/2), int((box[1]+box[3])/2))
         centroids.append((centroidX, centroidY))
     return centroids
@@ -169,10 +169,7 @@ def build_poly_equation(images, types):
     eqn = ''
     for (image, char_type) in zip(images, types):
         label, conf = show_prediction_lite(image)
-        if char_type == 'super':
-            eqn += '^' + label
-        else:
-            eqn += label
+        eqn += f'^{label}' if char_type == 'super' else label
     return eqn
 
 
@@ -198,20 +195,15 @@ def get_desmos_friendly_eqn(eqn):
     except IndexError:
         return eqn
 
-    # remove = sign
-    if right == '':
+    if right in ['', '0']:
         return left
-    elif right == '0':
-        return left
-    else:
-        coeff = str(-1*float(right))
-        if coeff[0] != '-':
-            coeff = '+'+coeff
-        eqn = left + coeff
-        return eqn
+    coeff = str(-1*float(right))
+    if coeff[0] != '-':
+        coeff = f'+{coeff}'
+    eqn = left + coeff
+    return eqn
 
 def get_poly_equation(image):
-    DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
         image.read(), np.uint8), cv.IMREAD_UNCHANGED)
     image = handle_alpha_channel(image)
@@ -223,7 +215,7 @@ def get_poly_equation(image):
     resized_images = get_resized_images(padded_images)
     centroids = get_centroid(chars_bb)
     chars_type = classify_superscript(centroids, chars_bb)
-    DEBUG_LOGS.append(f'chars_type: {chars_type}')
+    DEBUG_LOGS = [f'chars_type: {chars_type}']
     equation = build_poly_equation(resized_images, chars_type)
     desmos_eqn = get_desmos_friendly_eqn(equation)
     return equation, desmos_eqn, DEBUG_LOGS
