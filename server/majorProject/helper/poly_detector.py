@@ -192,6 +192,24 @@ def handle_alpha_channel(image):
         return image
 
 
+def get_desmos_friendly_eqn(eqn):
+    try:
+        left, right = eqn.split('=')[0], eqn.split('=')[1]
+    except IndexError:
+        return eqn
+
+    # remove = sign
+    if right == '':
+        return left
+    elif right == '0':
+        return left
+    else:
+        coeff = str(-1*float(right))
+        if coeff[0] != '-':
+            coeff = '+'+coeff
+        eqn = left + coeff
+        return eqn
+
 def get_poly_equation(image):
     DEBUG_LOGS = []
     image = cv.imdecode(np.fromstring(
@@ -207,4 +225,5 @@ def get_poly_equation(image):
     chars_type = classify_superscript(centroids, chars_bb)
     DEBUG_LOGS.append(f'chars_type: {chars_type}')
     equation = build_poly_equation(resized_images, chars_type)
-    return equation, DEBUG_LOGS
+    desmos_eqn = get_desmos_friendly_eqn(equation)
+    return equation, desmos_eqn, DEBUG_LOGS
