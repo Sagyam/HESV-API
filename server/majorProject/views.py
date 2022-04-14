@@ -18,9 +18,10 @@ def get_polynomial_equation(request):
         data = {'error': 'No image provided'}
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-    equation, DEBUG_LOGS = get_poly_equation(image)
+    equation, desmos_eqn,DEBUG_LOGS = get_poly_equation(image)
     data = {
         'equation': equation,
+        'desmos_eqn': desmos_eqn,
         'debug_logs': DEBUG_LOGS
     }
     return Response(data, status=status.HTTP_200_OK)
