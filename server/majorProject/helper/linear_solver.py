@@ -140,18 +140,25 @@ def solve_2d(equtations):
         b.append(c)
 
     a, b = np.asanyarray(a), np.asanyarray(b)
+    DEBUG_LOGS.append(f'std_eqn: {std_eqn}, a: {a}, b: {b}')
 
     try:
         soln = np.linalg.solve(a, b)
+        soln = [round(x, 2) for x in soln]
+        #Quick Hack
+        soln = [-1 * x for x in soln]
         error = False
     except Exception as e:
         try:
-            warningMessage = 'Inverse of matrix does not exist.'
+            warningMessage = 'No Inverse Found.'
             soln = np.dot(np.linalg.pinv(a), b)
+            soln = [round(x, 2) for x in soln]
+            #Quick Hack
+            soln = [-1 * x for x in soln]
             error = False
         except Exception as e:
             soln = None
-            errorMessage = e
+            errorMessage = 'System is not Solvable.'
             error = True
     return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
 
@@ -170,18 +177,25 @@ def solve_3d(equtations):
         b.append(c)
 
     a, b = np.asanyarray(a), np.asanyarray(b)
+    DEBUG_LOGS.append(f'std_eqn: {std_eqn}, a: {a}, b: {b}')
 
     try:
         soln = np.linalg.solve(a, b)
+        soln = [round(x, 2) for x in soln]
+        #Quick Hack
+        soln = [-1 * x for x in soln]
         error = False
     except Exception as e:
         try:
-            warningMessage = 'Inverse of matrix does not exist.'
+            warningMessage = 'No Inverse Found.'
             soln = np.dot(np.linalg.pinv(a), b)
+            #Quick Hack
+            soln = [-1 * x for x in soln]
+            soln = [round(x, 2) for x in soln]
             error = False
         except Exception as e:
             soln = None
-            errorMessage = e
+            errorMessage = 'System is not Solvable.'
             error = True
 
     return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
