@@ -123,12 +123,36 @@ def get_coffecient_3d(equation):
     return [float(coef_x), float(coef_y), float(coef_z), float(intercept)]
 
 
+def isParallel(equations):
+    pass
+
+def isCoincident(equations):
+    pass
+
+def isOverDetermined(eq1, eq2, eq3):
+    pass
+
+def isUnderDetermined(equations):
+    '''
+    Checks if the equations contains z or Z.
+    '''
+    for eq in equations:
+        if 'z' in eq or 'Z' in eq:
+            return True
+    return False
+
 def solve_2d(equation):
     a = []
     b = []
     errorMessage = None
     warningMessage = None
     soln = None
+
+    if isUnderDetermined(equation):
+        errorMessage = "Under-Determined System"
+        error = True
+        return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
+
     for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, c = get_coffecient_2d(std_eqn)
@@ -146,7 +170,7 @@ def solve_2d(equation):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'No Inverse Found.'
+            warningMessage = 'Exact solution does not exist.'
             soln = np.dot(np.linalg.pinv(a), b)
             soln = [round(x, 2) for x in soln]
             #Quick Hack
@@ -182,7 +206,7 @@ def solve_3d(equation):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'No Inverse Found.'
+            warningMessage = 'Exact solution does not exist.'
             soln = np.dot(np.linalg.pinv(a), b)
             #Quick Hack
             soln = [-1 * x for x in soln]
