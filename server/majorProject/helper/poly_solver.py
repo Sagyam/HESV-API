@@ -33,8 +33,11 @@ def standardize_eqn(eqn):
     :param equation: equation to standardize eg 2x^2+3x=7
     :return: standardized equation eg 2x^2+3x-7
     '''
-
+   
     # Add a ^1 to the end of the last x
+    if eqn[-1] in ['x', 'X']:
+        eqn = eqn + '^1'
+
     for i, char in enumerate(eqn):
         if char in ['x', 'X'] and eqn[i+1] != '^':
             eqn = eqn[:i+1] + '^1' + eqn[i+1:]
@@ -154,11 +157,12 @@ def solve_polynomial_helper(equation):
 
     solutions = np.roots(coefficents)
     solutions = [round(x, 2) for x in solutions]
+   
 
-    DEBUG_LOGS.append(f'Solutions: {solutions}')
+    DEBUG_LOGS.append(f'Raw Solutions: {solutions}')
 
     soln_type = 'real' if np.isreal(solutions).all() else 'complex'
-    if soln_type == 'complex':
-        solutions = [str(solution.real) + '+i' + str(solution.imag)
-                     for solution in solutions]
+
+    solutions = [str(solution.real) if np.isreal(solution) else str(solution).strip('()') for solution in solutions]
+
     return solutions, soln_type, DEBUG_LOGS

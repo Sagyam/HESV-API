@@ -129,7 +129,6 @@ def get_coffecient_3d(equation):
 def solve_2d(equtations):
     a = []
     b = []
-    DEBUG_LOGS = []
     errorMessage = None
     warningMessage = None
     soln = None
@@ -166,7 +165,6 @@ def solve_2d(equtations):
 def solve_3d(equtations):
     a = []
     b = []
-    DEBUG_LOGS = []
     errorMessage = None
     warningMessage = None
     soln = None
