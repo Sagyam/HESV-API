@@ -42,8 +42,7 @@ def standardize_eqn(equation):
 
     else:
         equation = left
-
-    DEBUG_LOGS.append(f'equation: {equation}')
+ 
 
     return equation
 
@@ -77,8 +76,7 @@ def get_coffecient_2d(equation):
     elif coef_y == '-':
         coef_y = -1.0
 
-    DEBUG_LOGS.append(
-        f'coef_x: {coef_x}, coef_y: {coef_y}, intercept: {intercept}')
+ 
     return [float(coef_x), float(coef_y), float(intercept)]
 
 
@@ -121,18 +119,17 @@ def get_coffecient_3d(equation):
     elif coef_z == '-':
         coef_z = -1.0
 
-    DEBUG_LOGS.append(
-        f'coef_x: {coef_x}, coef_y: {coef_y}, coef_z: {coef_z}, intercept: {intercept}')
+    
     return [float(coef_x), float(coef_y), float(coef_z), float(intercept)]
 
 
-def solve_2d(equtations):
+def solve_2d(equation):
     a = []
     b = []
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+    for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, c = get_coffecient_2d(std_eqn)
         a.append([x, y])
@@ -162,13 +159,13 @@ def solve_2d(equtations):
     return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
 
 
-def solve_3d(equtations):
+def solve_3d(equation):
     a = []
     b = []
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+    for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, z, c = get_coffecient_3d(std_eqn)
         a.append([x, y, z])
