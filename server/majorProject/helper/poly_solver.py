@@ -154,11 +154,12 @@ def solve_polynomial_helper(equation):
 
     solutions = np.roots(coefficents)
     solutions = [round(x, 2) for x in solutions]
+   
 
-    DEBUG_LOGS.append(f'Solutions: {solutions}')
+    DEBUG_LOGS.append(f'Raw Solutions: {solutions}')
 
     soln_type = 'real' if np.isreal(solutions).all() else 'complex'
-    if soln_type == 'complex':
-        solutions = [str(solution.real) + '+i' + str(solution.imag)
-                     for solution in solutions]
+
+    solutions = [str(solution.real) if np.isreal(solution) else str(solution).strip('()') for solution in solutions]
+
     return solutions, soln_type, DEBUG_LOGS
