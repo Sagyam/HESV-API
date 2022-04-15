@@ -123,14 +123,15 @@ def get_coffecient_3d(equation):
     return [float(coef_x), float(coef_y), float(coef_z), float(intercept)]
 
 
-def isParallel(equations):
-    pass
-
-def isCoincident(equations):
-    pass
-
-def isOverDetermined(eq1, eq2, eq3):
-    pass
+def isOverDetermined(equations):
+    '''
+    Checks if the equations does not contain z or Z.
+    '''
+    for eq in equations:
+        if 'z' in eq or 'Z' in eq:
+            return False
+    return True
+      
 
 def isUnderDetermined(equations):
     '''
@@ -170,7 +171,7 @@ def solve_2d(equation):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'Exact solution does not exist.'
+            warningMessage = 'No exact solution.'
             soln = np.dot(np.linalg.pinv(a), b)
             soln = [round(x, 2) for x in soln]
             #Quick Hack
@@ -189,6 +190,11 @@ def solve_3d(equation):
     errorMessage = None
     warningMessage = None
     soln = None
+
+    if isOverDetermined(equation):
+        warningMessage = "Over-Determined System"
+        
+
     for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, z, c = get_coffecient_3d(std_eqn)
@@ -206,12 +212,12 @@ def solve_3d(equation):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'Exact solution does not exist.'
+            errorMessage = 'No exact solution'
             soln = np.dot(np.linalg.pinv(a), b)
             #Quick Hack
             soln = [-1 * x for x in soln]
             soln = [round(x, 2) for x in soln]
-            error = False
+            error = True
         except Exception as e:
             soln = None
             errorMessage = 'System is not Solvable.'
