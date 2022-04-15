@@ -81,8 +81,8 @@ def solve_2d_linear_equation(request):
     soln, error, errorMessage, warningMessage, DEBUG_LOGS = solve_2d([eq1, eq2])
 
     data = {
-        'x': soln[0],
-        'y': soln[1],
+        'x': soln[0] if soln is not None else None,
+        'y': soln[1] if soln is not None else None,
         'error': error,
         "errorMessage": errorMessage,
         "warningMessage": warningMessage,

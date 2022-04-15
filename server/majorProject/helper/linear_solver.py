@@ -42,8 +42,7 @@ def standardize_eqn(equation):
 
     else:
         equation = left
-
-    DEBUG_LOGS.append(f'equation: {equation}')
+ 
 
     return equation
 
@@ -77,8 +76,7 @@ def get_coffecient_2d(equation):
     elif coef_y == '-':
         coef_y = -1.0
 
-    DEBUG_LOGS.append(
-        f'coef_x: {coef_x}, coef_y: {coef_y}, intercept: {intercept}')
+ 
     return [float(coef_x), float(coef_y), float(intercept)]
 
 
@@ -121,18 +119,42 @@ def get_coffecient_3d(equation):
     elif coef_z == '-':
         coef_z = -1.0
 
-    DEBUG_LOGS.append(
-        f'coef_x: {coef_x}, coef_y: {coef_y}, coef_z: {coef_z}, intercept: {intercept}')
+    
     return [float(coef_x), float(coef_y), float(coef_z), float(intercept)]
 
 
-def solve_2d(equtations):
+def isOverDetermined(equations):
+    '''
+    Checks if the equations does not contain z or Z.
+    '''
+    for eq in equations:
+        if 'z' in eq or 'Z' in eq:
+            return False
+    return True
+      
+
+def isUnderDetermined(equations):
+    '''
+    Checks if the equations contains z or Z.
+    '''
+    for eq in equations:
+        if 'z' in eq or 'Z' in eq:
+            return True
+    return False
+
+def solve_2d(equation):
     a = []
     b = []
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+
+    if isUnderDetermined(equation):
+        errorMessage = "Under-Determined System"
+        error = True
+        return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
+
+    for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, c = get_coffecient_2d(std_eqn)
         a.append([x, y])
@@ -149,7 +171,7 @@ def solve_2d(equtations):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'No Inverse Found.'
+            warningMessage = 'No exact solution.'
             soln = np.dot(np.linalg.pinv(a), b)
             soln = [round(x, 2) for x in soln]
             #Quick Hack
@@ -162,13 +184,18 @@ def solve_2d(equtations):
     return [soln, error, errorMessage, warningMessage, DEBUG_LOGS]
 
 
-def solve_3d(equtations):
+def solve_3d(equation):
     a = []
     b = []
     errorMessage = None
     warningMessage = None
     soln = None
-    for i, eqn in enumerate(equtations):
+
+    if isOverDetermined(equation):
+        warningMessage = "Over-Determined System"
+        
+
+    for i, eqn in enumerate(equation):
         std_eqn = standardize_eqn(eqn)
         x, y, z, c = get_coffecient_3d(std_eqn)
         a.append([x, y, z])
@@ -185,12 +212,12 @@ def solve_3d(equtations):
         error = False
     except Exception as e:
         try:
-            warningMessage = 'No Inverse Found.'
+            errorMessage = 'No exact solution'
             soln = np.dot(np.linalg.pinv(a), b)
             #Quick Hack
             soln = [-1 * x for x in soln]
             soln = [round(x, 2) for x in soln]
-            error = False
+            error = True
         except Exception as e:
             soln = None
             errorMessage = 'System is not Solvable.'
