@@ -33,8 +33,11 @@ def standardize_eqn(eqn):
     :param equation: equation to standardize eg 2x^2+3x=7
     :return: standardized equation eg 2x^2+3x-7
     '''
-
+   
     # Add a ^1 to the end of the last x
+    if eqn[-1] in ['x', 'X']:
+        eqn = eqn + '^1'
+
     for i, char in enumerate(eqn):
         if char in ['x', 'X'] and eqn[i+1] != '^':
             eqn = eqn[:i+1] + '^1' + eqn[i+1:]
