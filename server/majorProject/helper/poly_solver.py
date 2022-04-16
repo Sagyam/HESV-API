@@ -19,7 +19,7 @@ def add_leading_ones(eqn):
             position_table[count] = i
 
     for key, value in position_table.items():
-        eqn = eqn[:value+key-1] + '1' + eqn[value+key-1:]
+        eqn = f'{eqn[:value+key-1]}1{eqn[value+key-1:]}'
 
     return eqn
 
@@ -36,18 +36,18 @@ def standardize_eqn(eqn):
    
     # Add a ^1 to the end of the last x
     if eqn[-1] in ['x', 'X']:
-        eqn = eqn + '^1'
-        
+        eqn = f'{eqn}^1'
+                
 
     for i, char in enumerate(eqn):
         if char in ['x', 'X'] and eqn[i+1] != '^':
-            eqn = eqn[:i+1] + '^1' + eqn[i+1:]
+            eqn = f'{eqn[:i+1]}^1{eqn[i+1:]}'
             break
-            
+
 
     # Add a leading + at very beginning
     if eqn[0] != '-':
-        eqn = '+'+eqn
+        eqn = f'+{eqn}'
 
     # add a leading 1 where necessary
     eqn = add_leading_ones(eqn)
@@ -57,17 +57,13 @@ def standardize_eqn(eqn):
     except IndexError:
         return eqn
 
-    # remove = sign
-    if right == '':
+    if right in ['', '0']:
         return left
-    elif right == '0':
-        return left
-    else:
-        coeff = str(-1*float(right))
-        if coeff[0] != '-':
-            coeff = '+'+coeff
-        eqn = left + coeff
-        return eqn
+    coeff = str(-1*float(right))
+    if coeff[0] != '-':
+        coeff = f'+{coeff}'
+    eqn = left + coeff
+    return eqn
 
 
 def get_sorted_eqn(eqn):
@@ -97,8 +93,7 @@ def get_sorted_eqn(eqn):
     terms = [term[::-1] for term in terms]
     # now add the signs back to terms
     terms = [signs[term] + term for term in terms]
-    sorted_eqn = ''.join(terms) + number
-    return sorted_eqn
+    return ''.join(terms) + number
 
 
 def get_visible_coeff(eqn):
@@ -115,9 +110,7 @@ def get_visible_coeff(eqn):
     no_carets = re.sub(r"(\^\d+)", "", eqn)
     # get numeric coefficients
     raw_coeffs = re.findall(r'[\d\.\-\+]+', no_carets)
-    # add a 1 to lone signs and convert coefficients to float
-    coeffs = [float(x) for x in raw_coeffs]
-    return coeffs
+    return [float(x) for x in raw_coeffs]
 
 
 def get_powers(eqn):
@@ -125,10 +118,7 @@ def get_powers(eqn):
     Returns all powers from eqn
     Eg: '2x^2+3x^2' will return [2,2]
     '''
-    powers = []
-    for x in re.findall(r'(\^\d+)', eqn):
-        powers.append(int(x[1:]))
-    return powers
+    return [int(x[1:]) for x in re.findall(r'(\^\d+)', eqn)]
 
 
 def get_all_coeffs(eqn):
@@ -147,11 +137,8 @@ def get_all_coeffs(eqn):
 
 
 def solve_polynomial_helper(equation):
-    DEBUG_LOGS = []
-
     standardized_eqn = standardize_eqn(equation)
-    DEBUG_LOGS.append(f'Standardized equation: {standardized_eqn}')
-
+    DEBUG_LOGS = [f'Standardized equation: {standardized_eqn}']
     sorted_eqn = get_sorted_eqn(standardized_eqn)
     DEBUG_LOGS.append(f'Sorted equation: {sorted_eqn}')
 
@@ -160,7 +147,7 @@ def solve_polynomial_helper(equation):
 
     solutions = np.roots(coefficents)
     solutions = [round(x, 2) for x in solutions]
-   
+
 
     DEBUG_LOGS.append(f'Raw Solutions: {solutions}')
 
