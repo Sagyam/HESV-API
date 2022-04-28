@@ -5,8 +5,8 @@ import cv2
 
 from .helper.poly_solver import solve_polynomial_helper
 from .helper.linear_solver import solve_2d, solve_3d
-from .helper.poly_detector import get_poly_eqn_test
-from .helper.linear_detector import get_lin_equation_test
+from .helper.poly_detector import get_poly_eqn
+from .helper.linear_detector import get_lin_equation
 
 from .test.polynomial_test_case import poly_test_eqn
 from .test.two_d_linear_cases import two_d_linear_eqn
