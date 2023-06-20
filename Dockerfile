@@ -19,7 +19,7 @@ COPY . .
 EXPOSE 8000
 
 # CD into server
-RUN cd server
+RUN cd server/djangoBackend
 
 # Run gunicorn server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "djangoBackend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wsgi:application"]
