@@ -28,7 +28,7 @@ class_names = [
 
 # model = tf.keras.models.load_model("../models/19_class.h5")
 
-lite = tf.lite.Interpreter(model_path='../models/tflite_quant_model.tflite')
+lite = tf.lite.Interpreter(model_path='./models/tflite_quant_model.tflite')
 input_details = lite.get_input_details()
 output_details = lite.get_output_details()
 lite.resize_tensor_input(input_details[0]['index'], (1, 100, 100, 3))
