@@ -15,7 +15,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
-COPY . .
+COPY . /app
 
 # Expose port 8000
 EXPOSE 8000
