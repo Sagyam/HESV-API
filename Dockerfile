@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 8000
 
 # Run App
-CMD ["gunicorn", "--bind", ":8000", "server.wsgi:application"]
+CMD ["gunicorn", "--bind", ":8000", "djangoBackend.wsgi:application"]
