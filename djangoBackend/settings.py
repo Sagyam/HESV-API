@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-blz-!u^5knpjbc_*h4w6rj^me%3ibm88_sggkeolcd7^1t8ybt
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
-                 '127.0.0.1', 'https://hesv-api-production.up.railway.app']
+                 '127.0.0.1', 'https://sagyam.github.io/HESV-App']
 
 
 # Application definition
