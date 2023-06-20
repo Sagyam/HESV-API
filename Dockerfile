@@ -19,8 +19,3 @@ COPY . .
 
 # Expose port 8000
 EXPOSE 8000
-
-RUN cd server && pwd
-
-# Run gunicorn server
-CMD ["gunicorn", "djangoBackend.wsgi"]
