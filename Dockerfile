@@ -19,3 +19,6 @@ COPY . .
 
 # Expose port 8000
 EXPOSE 8000
+
+# Run App
+CMD ["gunicorn", "--bind", ":8000", "server.wsgi:application"]
