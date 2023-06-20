@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 
 # Download the required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends ffmpeg libsm6 libxext6
+    && apt-get -y install --no-install-recommends ffmpeg libsm6 libxext6 gunicorn
 
 # Set the working directory
 WORKDIR /app
