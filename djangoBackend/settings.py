@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-blz-!u^5knpjbc_*h4w6rj^me%3ibm88_sggkeolcd7^1t8ybt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'https://hesv-api.onrender.com']
-
 
 # Application definition
 
@@ -39,13 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'majorProject',
     'rest_framework',
-    'corsheaders',
-
-
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +58,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'corsheaders.middleware.CorsMiddleware',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -76,8 +69,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangoBackend.wsgi.application'
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database
