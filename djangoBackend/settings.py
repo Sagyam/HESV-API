@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-blz-!u^5knpjbc_*h4w6rj^me%3ibm88_sggkeolcd7^1t8ybt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'hesv-api.onrender.com']
+ALLOWED_HOSTS = ['localhost', 'https://hesv-api.onrender.com']
 
 
 # Application definition
